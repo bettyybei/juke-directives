@@ -41,12 +41,14 @@ juke.directive('albumList', function() {
 })
 
 
-juke.directive('songList', function(PlayerFactory) {
+juke.directive('songList', function(PlayerFactory, PlaylistFactory) {
   return {
     restrict: 'E',
     templateUrl: '/js/song/templates/song-panel.html',
     scope: {
-      songs: '='
+      songs: '=',
+      isPlaylist: '=',
+      playlistid: '='
     },
     link: function(scope) {
 
@@ -67,6 +69,8 @@ juke.directive('songList', function(PlayerFactory) {
       scope.isPlaying = function(song) {
         return PlayerFactory.isPlaying() && PlayerFactory.getCurrentSong() === song;
       };
+
+      scope.remove = PlaylistFactory.removeSong
 
 
     }

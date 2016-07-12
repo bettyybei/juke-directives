@@ -1,6 +1,6 @@
 'use strict';
 
-juke.factory('PlaylistFactory', function ($http, SongFactory) {
+juke.factory('PlaylistFactory', function ($http, SongFactory,$rootScope) {
 
   var cachedPlaylists = [];
 
@@ -43,6 +43,14 @@ juke.factory('PlaylistFactory', function ($http, SongFactory) {
     })
     .then(SongFactory.convert);
   };
+
+  PlaylistFactory.removeSong = function (id, songData) {
+    console.log(id, songData)
+    return $http.delete('/api/playlists/' + id + '/songs/' + songData.id)
+    .then(function(){
+      $rootScope.$digest()
+    })
+  }
 
   return PlaylistFactory;
 
